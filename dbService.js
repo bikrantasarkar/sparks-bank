@@ -66,7 +66,7 @@ class DbService {
         try {
             id = parseInt(id, 10);
             const response = await new Promise((resolve, reject) => {
-                const query = "DELETE FROM names WHERE id=?";
+                const query = "DELETE FROM accounts WHERE id=?";
                 connection.query(query, [id], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
