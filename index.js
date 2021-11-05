@@ -74,12 +74,17 @@ addBtn.onclick = function () {
     const name = nameInput.value;
     nameInput.value = "";
 
+    const initialBalanceInput = document.querySelector('#initial-balance-input');
+    const initialBalance = initialBalanceInput.value;
+    initialBalanceInput.value = "";
+
+
     fetch('http://localhost:5000/insert', {
         headers: {
             'Content-type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({ name: name })
+        body: JSON.stringify({ name: name, initialBalance: initialBalance })
     })
         .then(response => response.json())
         .then(data => insertRowIntoTable(data['data']));
@@ -92,17 +97,21 @@ function insertRowIntoTable(data) {
 
     let tableHtml = "<tr>";
 
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (key === 'dateAdded') {
-                data[key] = new Date(data[key]).toLocaleString();
-            }
-            tableHtml += `<td>${data[key]}</td>`;
-        }
-    }
-
+    // for (var key in data) {
+    //     if (data.hasOwnProperty(key)) {
+    //         if (key === 'dateAdded') {
+    //             data[key] = new Date(data[key]).toLocaleString();
+    //         }
+    //         tableHtml += `<td>${data[key]}</td>`;
+    //     }
+    // }
+    tableHtml += `<td>${data.id}</td>`;
+    tableHtml += `<td>${data.name}</td>`;
+    tableHtml += `<td>${data.dateAdded}</td>`;
     tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
     tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
+    tableHtml += `<td>${data.initialBalance}</td>`;
+    tableHtml += `<td><button class="transefer-row-btn" data-id=${data.id}>Transfer</td>`;
 
     tableHtml += "</tr>";
 
@@ -123,15 +132,16 @@ function loadHTMLTable(data) {
     }
 
     let tableHtml = "";
+    console.log(data);
 
-    data.forEach(function ({ id, name, date_added }) {
+    data.forEach(function ({ id, name, date_registered, acc_balance }) {
         tableHtml += "<tr>";
         tableHtml += `<td>${id}</td>`;
         tableHtml += `<td>${name}</td>`;
-        tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
+        tableHtml += `<td>${new Date(date_registered).toLocaleString()}</td>`;
         tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
         tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
-        tableHtml += `<td>${0}</td>`;
+        tableHtml += `<td>${acc_balance}</td>`;
         tableHtml += `<td><button class="transefer-row-btn" data-id=${id}>Transfer</td>`;
         tableHtml += "</tr>";
     });
