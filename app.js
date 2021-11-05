@@ -52,10 +52,10 @@ app.get('/search/:name', (request, response) => {
 //update
 app.patch('/update', (request, response) => {
     // console.log(request.params);
-    const { id, name } = request.body;
+    const { id, name, newbalance } = request.body;
     const db = dbService.getDbServiceInstance();
     console.log("appjs patch:", request.body);
-    const result = db.updateNameById(id, name);
+    const result = db.updateNameById(id, name, newbalance);
     result.then(data => response.json({ success: data }))
         .catch(err => console.log(err));
 

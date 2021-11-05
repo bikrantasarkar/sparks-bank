@@ -41,12 +41,14 @@ function handleEditRow(id) {
     const updateSection = document.querySelector('#update-row');
     updateSection.hidden = false;
     document.querySelector('#update-name-input').dataset.id = id;
+
 }
 
 updateBtn.onclick = function () {
     const updateNameInput = document.querySelector('#update-name-input');
+    const updateNameBalance = document.querySelector('#update-balance-input');
 
-    console.log(updateNameInput);
+    console.log(updateNameInput, updateNameBalance);
 
     fetch('http://localhost:5000/update', {
         method: 'PATCH',
@@ -55,7 +57,8 @@ updateBtn.onclick = function () {
         },
         body: JSON.stringify({
             id: updateNameInput.dataset.id,
-            name: updateNameInput.value
+            name: updateNameInput.value,
+            newbalance: updateNameBalance.value
         })
     })
         .then(response => response.json())
