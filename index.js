@@ -12,10 +12,21 @@ document.querySelector('table tbody').addEventListener('click', function (event)
     if (event.target.className === "edit-row-btn") {
         handleEditRow(event.target.dataset.id);
     }
+    if (event.target.className === "transfer-row-btn") {
+        handleTransferById(event.target.dataset.id);
+    }
 });
 
 const updateBtn = document.querySelector('#update-row-btn');
 const searchBtn = document.querySelector('#search-btn');
+const transferBtn = document.querySelector('#transfer-btn');
+
+function handleTransferById(id) {
+    const transferSection = document.querySelector('#transfer');
+    transferSection.hidden = false;
+    document.querySelector('#transfer1').dataset.id = id;
+
+}
 
 searchBtn.onclick = function () {
     const searchValue = document.querySelector('#search-input').value;
@@ -42,6 +53,12 @@ function handleEditRow(id) {
     updateSection.hidden = false;
     document.querySelector('#update-name-input').dataset.id = id;
 
+}
+
+transferBtn.onclick = function () {
+    const acc1 = document.querySelector('#transfer1');
+    const acc2 = document.querySelector('#transfer2');
+    const amt = document.querySelector('#transfer-amount');
 }
 
 updateBtn.onclick = function () {
@@ -114,7 +131,7 @@ function insertRowIntoTable(data) {
     tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
     tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
     tableHtml += `<td>${data.initialBalance}</td>`;
-    tableHtml += `<td><button class="transefer-row-btn" data-id=${data.id}>Transfer</td>`;
+    tableHtml += `<td><button class="transfer-row-btn" data-id=${data.id}>Transfer</td>`;
 
     tableHtml += "</tr>";
 
@@ -145,7 +162,7 @@ function loadHTMLTable(data) {
         tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
         tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
         tableHtml += `<td>${acc_balance}</td>`;
-        tableHtml += `<td><button class="transefer-row-btn" data-id=${id}>Transfer</td>`;
+        tableHtml += `<td><button class="transfer-row-btn" data-id=${id}>Transfer</td>`;
         tableHtml += "</tr>";
     });
 
