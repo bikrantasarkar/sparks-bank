@@ -24,7 +24,7 @@ const transferBtn = document.querySelector('#transfer-btn');
 function handleTransferById(id) {
     const transferSection = document.querySelector('#transfer');
     transferSection.hidden = false;
-    document.querySelector('#transfer1').dataset.id = id;
+    document.querySelector('#transfer').dataset.id = id;
 
 }
 
@@ -56,9 +56,30 @@ function handleEditRow(id) {
 }
 
 transferBtn.onclick = function () {
-    const acc1 = document.querySelector('#transfer1');
-    const acc2 = document.querySelector('#transfer2');
+    const payer = document.querySelector('#transfer');
+    const transferId = document.querySelector('#transfer-id');
     const amt = document.querySelector('#transfer-amount');
+
+    console.log("ZA:", transferId.value, amt.value, payer.dataset.id);
+
+    fetch('http://localhost:5000/update',
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id1: payer.dataset.id,
+                id2: transferId.value,
+                amt: amt.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        })
 }
 
 updateBtn.onclick = function () {

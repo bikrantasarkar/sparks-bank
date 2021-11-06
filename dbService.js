@@ -102,6 +102,30 @@ class DbService {
 
     }
 
+    async tranferById(id1, id2, amt) {
+
+        try {
+            id1 = parseInt(id1, 10);
+            id2 = parseInt(id2, 10);
+            amt = parseInt(amt, 10);
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE accounts SET name = ? , acc_balance = ? WHERE id = ? ";
+
+                connection.query(query, [name, newbalance, id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            return response === 1 ? true : false;
+
+            // console.log(response);
+        } catch (error) {
+            console.log("dbsrviece error", error);
+            return false;
+        }
+
+    }
+
     async searchByName(name) {
         try {
             const response = await new Promise((resolve, reject) => {

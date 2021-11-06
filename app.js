@@ -29,10 +29,8 @@ app.post('/insert', (request, response) => {
 //read
 app.get('/getAll', (request, response) => {
     const db = dbService.getDbServiceInstance();
-
     const result = db.getAllData();
     // console.log(result);
-
     result.then(data => response.json({ data: data }))
         .catch(err => console.log(err));
 });
@@ -41,9 +39,7 @@ app.get('/getAll', (request, response) => {
 app.get('/search/:name', (request, response) => {
     const { name } = request.params;
     const db = dbService.getDbServiceInstance();
-
     const result = db.searchByName(name);
-
     result.then(data => response.json({ data: data }))
         .catch(err => console.log(err));
 });
@@ -58,9 +54,19 @@ app.patch('/update', (request, response) => {
     const result = db.updateNameById(id, name, newbalance);
     result.then(data => response.json({ success: data }))
         .catch(err => console.log(err));
-
-
 })
+
+//transfer
+// app.patch('/transfer', (request, response) => {
+//     // console.log(request.params);
+//     const { id1,id2,amt } = request.body;
+//     const db = dbService.getDbServiceInstance();
+//     console.log("appjs transfer patch:", request.body);
+//     const result = db.tranferById(id1,id2,amt);
+//     result.then(data => response.json({ success: data }))
+//         .catch(err => console.log(err));
+// })
+
 
 
 
