@@ -14,6 +14,9 @@ document.querySelector('table tbody').addEventListener('click', function (event)
     }
     if (event.target.className === "transfer-row-btn") {
         handleTransferById(event.target.dataset.id);
+        console.log("TF DONE");
+
+
     }
 });
 
@@ -62,7 +65,7 @@ transferBtn.onclick = function () {
 
     console.log("ZA:", transferId.value, amt.value, payer.dataset.id);
 
-    fetch('http://localhost:5000/update',
+    fetch('http://localhost:5000/transfer',
         {
             method: 'PATCH',
             headers: {

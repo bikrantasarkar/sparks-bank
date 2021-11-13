@@ -108,10 +108,32 @@ class DbService {
             id1 = parseInt(id1, 10);
             id2 = parseInt(id2, 10);
             amt = parseInt(amt, 10);
+            const dateAdded = new Date();
             const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE accounts SET name = ? , acc_balance = ? WHERE id = ? ";
 
-                connection.query(query, [name, newbalance, id], (err, result) => {
+                var sqlquery =
+                    `
+                SET autocommit=0;
+                start transaction;
+                SELECT @x:=acc_balance FROM accounts WHERE id=${id1}
+                SELECT @y:=acc_balance FROM accounts WHERE id=${id2}
+                
+                SELECT @a=@x+${amt};
+                SELECT @b=@y-${amt};
+                UPDATE accounts
+                SET acc_balance = @a
+                WHERE id=${id1};
+                UPDATE accounts
+                SET acc_balance =@b
+                WHERE id=${id2};
+                
+                SELECT @n1:=name FROM accounts WHERE id=${id1};
+                SELECT @n2:=name FROM accounts WHERE id=${id2};
+                INSERT INTO transactions(tname1,tname2,tdate,tamount)
+                VALUES(@n1,@n2,${dateAdded},${amt});
+                commit;
+                `;
+                connection.query(sqlquery, (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
                 })

@@ -56,16 +56,16 @@ app.patch('/update', (request, response) => {
         .catch(err => console.log(err));
 })
 
-//transfer
-// app.patch('/transfer', (request, response) => {
-//     // console.log(request.params);
-//     const { id1,id2,amt } = request.body;
-//     const db = dbService.getDbServiceInstance();
-//     console.log("appjs transfer patch:", request.body);
-//     const result = db.tranferById(id1,id2,amt);
-//     result.then(data => response.json({ success: data }))
-//         .catch(err => console.log(err));
-// })
+// transfer
+app.patch('/transfer', (request, response) => {
+    // console.log(request.params);
+    const { id1, id2, amt } = request.body;
+    const db = dbService.getDbServiceInstance();
+    console.log("appjs transfer patch:", request.body);
+    const result = db.tranferById(id1, id2, amt);
+    result.then(data => response.json({ success: data }))
+        .catch(err => console.log(err));
+})
 
 
 
