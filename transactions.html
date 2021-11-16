@@ -13,66 +13,32 @@
 </head>
 
 <body>
-    <h1 id="hea">BANKING &nbsp MANAGEMENT &nbsp SYSTEM</h1>
+    <div id="hea">
+        <h1>BANKING &nbsp MANAGEMENT &nbsp SYSTEM</h1>
+        <h2>Transactions</h2>
+    </div>
+
     <main>
-        <div class="addname">
 
-            <span>
-                <label>Name:</label>
-                <input type="text" id="name-input">
-                <label>Initial Balance:</label>
-                <input type="number" id="initial-balance-input">
-                <button id="add-name-btn">Add User</button>
-            </span>
-
-            <span>
-                <input placeholder="search by name" id="search-input">
-                <button id="search-btn">Search</button>
-            </span>
-
-
-        </div>
 
 
 
         <table id="table">
             <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date Registered</th>
-                <th>Delete Account</th>
-                <th>Edit</th>
-                <th>Account Balance</th>
-                <th>Transfer Money</th>
+                <th>Transaction No.</th>
+                <th>Sender</th>
+                <th>Recipeint</th>
+                <th>Amount transferred</th>
+                <th>Date</th>
             </thead>
             <tbody></tbody>
         </table>
 
-        <section hidden id="update-row">
-            <div class="addname2">
-                <h4>Edit Details:</h4>
-                <label>Name:</label>
-                <input placeholder="new name" type="text" id="update-name-input">
-                <input placeholder="new balance" type="number" id="update-balance-input">
-                <button id='update-row-btn'>Update</button>
-            </div>
-        </section>
 
-        <section hidden id="transfer">
-            <div class="addname2">
-                <h4>Transfer Details:</h4>
-                <label>Recipeint ID:</label>
-                <input placeholder="reciever" type="text" id="transfer-id">
-                <br>
-                <label>Amount:</label>
-                <input placeholder="Amount" type="number" id="transfer-amount">
-                <br>
-                <button id='transfer-btn'>Transfer</button>
-            </div>
-        </section>
+
 
     </main>
-    <script src="index.js"></script>
+    <script src="transactions.js"></script>
 </body>
 
 </html>
