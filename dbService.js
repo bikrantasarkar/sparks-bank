@@ -92,6 +92,7 @@ class DbService {
                     resolve(result.affectedRows);
                 })
             });
+            console.log("Response of update:", response);
             return response === 1 ? true : false;
 
             // console.log(response);
@@ -111,33 +112,91 @@ class DbService {
             const dateAdded = new Date();
             const response = await new Promise((resolve, reject) => {
 
-                var sqlquery =
-                    `
-                SET autocommit=0;
-                start transaction;
-                SELECT @x:=acc_balance FROM accounts WHERE id=${id1}
-                SELECT @y:=acc_balance FROM accounts WHERE id=${id2}
-                
-                SELECT @a=@x+${amt};
-                SELECT @b=@y-${amt};
-                UPDATE accounts
-                SET acc_balance = @a
-                WHERE id=${id1};
-                UPDATE accounts
-                SET acc_balance =@b
-                WHERE id=${id2};
-                
-                SELECT @n1:=name FROM accounts WHERE id=${id1};
-                SELECT @n2:=name FROM accounts WHERE id=${id2};
-                INSERT INTO transactions(tname1,tname2,tdate,tamount)
-                VALUES(@n1,@n2,${dateAdded},${amt});
-                commit;
-                `;
-                connection.query(sqlquery, (err, result) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(result.affectedRows);
-                })
-            });
+                connection.beginTransaction(function (err) {
+                    if (err) { throw err; }
+                    connection.query('SELECT @x:=acc_balance FROM accounts WHERE id=?;', [id1], function (err, result) {
+                        if (err) {
+                            connection.rollback(function () {
+                                throw err;
+                            });
+                        }
+                        console.log("q1");
+                        console.log(result);
+
+                        // var log = result.insertId;
+
+                        connection.query('SELECT @y:=acc_balance FROM accounts WHERE id=?;', [id2], function (err, result) {
+                            if (err) {
+                                connection.rollback(function () {
+                                    throw err;
+                                });
+                            }
+                            console.log("q2");
+                            console.log(result);
+                            connection.query('UPDATE accounts SET acc_balance = @x-? WHERE id=?;', [amt, id1], function (err, result) {
+                                if (err) {
+                                    connection.rollback(function () {
+                                        throw err;
+                                    });
+                                }
+                                console.log("q3");
+                                console.log(result);
+                                connection.query('UPDATE accounts SET acc_balance = @y+? WHERE id=?;', [amt, id2], function (err, result) {
+                                    if (err) {
+                                        connection.rollback(function () {
+                                            throw err;
+                                        });
+                                    }
+                                    console.log("q4");
+                                    console.log(result);
+                                    connection.query('SELECT @n1:=name FROM accounts WHERE id=?;', [id1], function (err, result) {
+                                        if (err) {
+                                            connection.rollback(function () {
+                                                throw err;
+                                            });
+                                        }
+                                        console.log("q5");
+                                        console.log(result);
+                                        connection.query('SELECT @n2:=name FROM accounts WHERE id=?;', [id2], function (err, result) {
+                                            if (err) {
+                                                connection.rollback(function () {
+                                                    throw err;
+                                                });
+                                            }
+                                            console.log("q6");
+                                            console.log(result);
+                                            connection.query('INSERT INTO transactions(tname1,tname2,tdate,tamount) VALUES(@n1,@n2,?,?);', [dateAdded, amt], function (err, result) {
+                                                if (err) {
+                                                    connection.rollback(function () {
+                                                        throw err;
+                                                    });
+                                                }
+                                                console.log("q7");
+                                                console.log(result);
+                                                connection.commit(function (err) {
+                                                    if (err) {
+                                                        connection.rollback(function () {
+                                                            throw err;
+                                                        });
+                                                    }
+                                                    console.log("q@@");
+                                                    console.log(result);
+                                                    // resolve(result);
+                                                    console.log('Transaction Complete.');
+
+                                                });//queryCommit
+                                            });//query7
+                                        });//query6
+                                    });//query5
+                                });//query4
+                            });//query3
+                        });//query2
+                    });//query1
+                });//transaction
+
+
+            });//promise
+            console.log("Response of transfere:", response);
             return response === 1 ? true : false;
 
             // console.log(response);
