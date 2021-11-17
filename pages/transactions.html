@@ -6,23 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web App</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="hea">
-        <h1>BANKING &nbsp MANAGEMENT &nbsp SYSTEM</h1>
-        <h2>Transactions</h2>
+    <div class="topnav">
+        <img src="https://internship.thesparksfoundation.info/assests/img/logo.png" alt="">
+        <h1 class="name">Sparks Bank</h1>
+
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="banktransfer.html">Accounts</a></li>
+                <li><a href="transactions.html">Transfers</a></li>
+            </ul>
+        </nav>
+
     </div>
 
+
     <main>
-
-
-
-
+        <div id="hea">
+            <h2>Transaction History</h2>
+        </div>
         <table id="table">
             <thead>
                 <th>Transaction No.</th>
@@ -38,7 +48,11 @@
 
 
     </main>
-    <script src="transactions.js"></script>
+    <script src="../transactions.js"></script>
+    <footer>
+        Copyright &copy; Bikranta Sarkar 2021
+        <hr>
+    </footer>
 </body>
 
 </html>
