@@ -24,6 +24,7 @@ DESC accounts;
 SELECT * FROM accounts;
 DESC transactions;
 SELECT * FROM transactions;
+TRUNCATE TABLE transactions;
 
 
 -- Transaction used in nodejs code

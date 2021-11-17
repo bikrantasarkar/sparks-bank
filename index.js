@@ -63,7 +63,7 @@ transferBtn.onclick = function () {
     const transferId = document.querySelector('#transfer-id');
     const amt = document.querySelector('#transfer-amount');
 
-    console.log("ZA:", transferId.value, amt.value, payer.dataset.id);
+
 
     fetch('http://localhost:5000/transfer',
         {
@@ -140,15 +140,8 @@ function insertRowIntoTable(data) {
     const isTableData = table.querySelector('.no-data');
 
     let tableHtml = "<tr>";
-
-    // for (var key in data) {
-    //     if (data.hasOwnProperty(key)) {
-    //         if (key === 'dateAdded') {
-    //             data[key] = new Date(data[key]).toLocaleString();
-    //         }
-    //         tableHtml += `<td>${data[key]}</td>`;
-    //     }
-    // }
+    var str = "new data";
+    tableHtml += `<td>${str}</td>`;
     tableHtml += `<td>${data.id}</td>`;
     tableHtml += `<td>${data.name}</td>`;
     tableHtml += `<td>${data.dateAdded}</td>`;
@@ -165,6 +158,7 @@ function insertRowIntoTable(data) {
         const newRow = table.insertRow();
         newRow.innerHTML = tableHtml;
     }
+    location.reload();
 }
 
 function loadHTMLTable(data) {
@@ -177,9 +171,11 @@ function loadHTMLTable(data) {
 
     let tableHtml = "";
     console.log(data);
-
+    var count = 0;
     data.forEach(function ({ id, name, date_registered, acc_balance }) {
+        count++;
         tableHtml += "<tr>";
+        tableHtml += `<td>${count}</td>`;
         tableHtml += `<td>${id}</td>`;
         tableHtml += `<td>${name}</td>`;
         tableHtml += `<td>${new Date(date_registered).toLocaleString()}</td>`;
